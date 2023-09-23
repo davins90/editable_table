@@ -73,18 +73,6 @@ days_mapping = {
     'Sunday': 'domenica'
 }
 
-def add_new_day(df):
-    tomorrow = df['data'].iloc[-1] + timedelta(days=1)
-    day_name = days_mapping[tomorrow.strftime('%A')]
-    new_data = {
-        "data": tomorrow,
-        "giorno": day_name,
-        "notte": "",
-        "casa": "",
-        "informazioni": ""
-    }
-    return df.append(new_data, ignore_index=True)
-
 project_id = "bigquery-to-streamlit"
 dataset_id = "turni_babbuz"
 table_id = "df"
@@ -103,19 +91,11 @@ df = pandas_gbq.read_gbq(sql, project_id=project_id)
 
 # Check if the dataframe's first row is "yesterday's date"
 yesterday = datetime.now().date() - timedelta(days=1)
-if not df.empty and df['data'].iloc[0] == yesterday:
+if df['data'].iloc[0] == yesterday:
     # Remove the first row (yesterday's date)
     df = df.iloc[1:].reset_index(drop=True)
-    # Add the 31st day
-    df = add_new_day(df)
 
 df = df.set_index("data")
-
-# st.dataframe(df)
-
-# df = generate_dataframe()
-
-# df = df.set_index("data")
 
 def color_rows(row):
     color = '#e6ffe6' if row['giorno'] in ['sabato', 'domenica'] else ''  # '#90ee90' is light green
