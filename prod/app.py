@@ -109,21 +109,24 @@ if not df.empty and df['data'].iloc[0] == yesterday:
     # Add the 31st day
     df = add_new_day(df)
 
-df['data'] = df['data'].dt.strftime('%d/%m/%E4Y')
+df = df.set_index("data")
 
-st.dataframe(df)
+# st.dataframe(df)
 
 # df = generate_dataframe()
 
 # df = df.set_index("data")
 
-# def color_rows(row):
-#     color = '#e6ffe6' if row['giorno'] in ['sabato', 'domenica'] else ''  # '#90ee90' is light green
-#     return ['background-color: {}'.format(color) for _ in row]
+def color_rows(row):
+    color = '#e6ffe6' if row['giorno'] in ['sabato', 'domenica'] else ''  # '#90ee90' is light green
+    return ['background-color: {}'.format(color) for _ in row]
 
-# df = df.style.apply(color_rows, axis=1)
+df = df.style.apply(color_rows, axis=1)
 
-# df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"))
+df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"))
 
+if st.button('Save to BigQuery'):
+    df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
+    st.success("Data saved to BigQuery successfully!")
 
 
