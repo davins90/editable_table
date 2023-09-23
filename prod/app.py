@@ -45,7 +45,7 @@ def generate_dataframe():
 
 # Info ID
 project_id = "bigquery-to-streamlit"
-dataset_id = "turni-babbuz"
+dataset_id = "turni_babbuz"
 table_id = "df"
 
 ###
