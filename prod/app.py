@@ -91,6 +91,8 @@ df = pandas_gbq.read_gbq(sql, project_id=project_id)
 
 # Check if the dataframe's first row is "yesterday's date"
 yesterday = datetime.now().date() - timedelta(days=1)
+st.write(yesterday)
+st.write(df.dtypes)
 if df['data'].iloc[0] == yesterday:
     # Remove the first row (yesterday's date)
     df = df.iloc[1:].reset_index(drop=True)
