@@ -23,7 +23,7 @@ table_id = "df"
 
 st.title("Turni Babbuz")
 
-st.write("Cliccate due volte sulla cella in cui volete scrivere e infine su 'Salva'.")
+st.markdown("## Cliccate due volte sulla cella in cui volete scrivere e infine su **'Salva'**.")
 
 # SQL query to select data from the table and order by date
 sql = f"""
@@ -66,8 +66,8 @@ df = df.set_index("data")
 def color_rows(row):
     if not row['notte']:
         color = '#ffcccc'  # Light red
-    elif row['giorno'] in ['sabato', 'domenica']:
-        color = '#e6ffe6'
+    # elif row['giorno'] in ['sabato', 'domenica']:
+    #     color = '#e6ffe6'
     else:
         color = ''
     return ['background-color: {}'.format(color) for _ in row]
@@ -77,7 +77,7 @@ df = df.style.apply(color_rows, axis=1)
 
 df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"))
 
-if st.button('Salva'):
+if st.button('Salva',type="primary"):
     df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
     st.success("Salvataggio riuscito!")
 
