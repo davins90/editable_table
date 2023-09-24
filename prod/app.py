@@ -119,10 +119,10 @@ df = df.set_index("data")
 #     return ['background-color: {}'.format(color) for _ in row]
 
 def color_rows(row):
-    if row['giorno'] in ['sabato', 'domenica']:
-        color = '#e6ffe6'
-    elif not row['notte']:
+    if not row['notte']:
         color = '#ffcccc'  # Light red
+    elif row['giorno'] in ['sabato', 'domenica']:
+        color = '#e6ffe6'
     else:
         color = ''
     return ['background-color: {}'.format(color) for _ in row]
