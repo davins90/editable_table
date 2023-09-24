@@ -110,7 +110,7 @@ if df['data'].iloc[0] == yesterday:
         'casa': "",
         'informazioni': ""
     }
-    df = df.append(new_row, ignore_index=True)
+    df = pd.concat([df, new_row], ignore_index=True)
 
 df = df.set_index("data")
 
