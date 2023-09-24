@@ -23,7 +23,7 @@ table_id = "df"
 
 st.title("Turni Babbuz")
 
-st.write("Cliccate due volte sulla cella in cui volete scrivere.")
+st.write("Cliccate due volte sulla cella in cui volete scrivere e infine su 'Salva'.")
 
 # SQL query to select data from the table and order by date
 sql = f"""
