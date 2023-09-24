@@ -112,7 +112,7 @@ if df['data'].iloc[0] == yesterday:
         'informazioni': ""
     }
 
-    new_row_df = pd.DataFrame.from_dict(new_row)
+    new_row_df = pd.DataFrame.from_dict(new_row,orient='index')
 
     st.dataframe(new_row_df)
 
