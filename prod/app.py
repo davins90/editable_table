@@ -80,10 +80,6 @@ table_id = "df"
 
 st.title("Turni Babbuz")
 
-current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-st.write(f"Current Time (UTC): {current_time}")
-
-
 # SQL query to select data from the table and order by date
 sql = f"""
 SELECT * 
@@ -107,14 +103,12 @@ if df['data'].iloc[0] == yesterday:
     new_row = {
         'data': new_date,
         'giorno': new_day_name,
-        'notte': "",
-        'casa': "",
-        'informazioni': ""
+        'notte': None,
+        'casa': None,
+        'informazioni': None
     }
 
     new_row_df = pd.DataFrame([new_row])
-
-    st.dataframe(new_row_df)
 
     df = pd.concat([df, new_row_df], ignore_index=True)
 
