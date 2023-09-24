@@ -83,8 +83,8 @@ df = st.data_editor(
     disabled=("data","giorno"),
     column_config={
         "notte": st.column_config.SelectboxColumn(
-            options=["Nemi","Marta","Reby","Raky","Fili"," Sandy","Shad","Alex","DaniP","DaniF","DaniD"],
-            required=False,
+            options=["Nemi","Marta","Reby","Raky","Fili"," Sandi","Shad","Alex","DaniP","DaniF","DaniD"],
+            required=True,
         )
     },
     hide_index=True,
