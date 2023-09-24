@@ -120,11 +120,11 @@ def color_rows(row):
     color = '#e6ffe6' if row['giorno'] in ['sabato', 'domenica'] else ''  
     return ['background-color: {}'.format(color) for _ in row]
 
-styled_df = df.style.apply(color_rows, axis=1)
+df = df.style.apply(color_rows, axis=1)
 
-df_to_edit = st.data_editor(styled_df, use_container_width=True, disabled=("data","giorno"))
+df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"))
 
-if st.button('Salva'):
-    df_to_edit.to_gbq(f'{dataset_id}.{table_id}', project_id, if_exists='replace')
-    st.success("Salvataggio riuscito!")
+if st.button('Save to BigQuery'):
+    df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
+    st.success("Data saved to BigQuery successfully!")
 
