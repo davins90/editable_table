@@ -111,13 +111,11 @@ if df['data'].iloc[0] == yesterday:
         'informazioni': ""
     }
 
-    new_row_df = pd.DataFrame.from_dict(new_row, orient='columns')
+    new_row_df = pd.DataFrame.from_dict(new_row, orient='columns',index=[0])
 
-    df = pd.concat([df, new_row_df])
+    df = pd.concat([df, new_row_df], ignore_index=True)
 
-st.dataframe(df)
-
-# df = df.set_index("data")
+df = df.set_index("data")
 
 def color_rows(row):
     color = '#e6ffe6' if row['giorno'] in ['sabato', 'domenica'] else ''  
@@ -125,9 +123,9 @@ def color_rows(row):
 
 df = df.style.apply(color_rows, axis=1)
 
-# df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"))
+df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"))
 
-# if st.button('Save to BigQuery'):
-#     df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
-#     st.success("Data saved to BigQuery successfully!")
+if st.button('Salva'):
+    df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
+    st.success("Salvataggio riuscito!")
 
