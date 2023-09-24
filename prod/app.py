@@ -80,7 +80,7 @@ table_id = "df"
 st.title("Turni Babbuz")
 
 current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-st.write(f"Current Time: {current_time}")
+st.write(f"Current Time (UTC): {current_time}")
 
 
 # SQL query to select data from the table and order by date
@@ -110,7 +110,9 @@ if df['data'].iloc[0] == yesterday:
         'casa': "",
         'informazioni': ""
     }
-    df = pd.concat([df, new_row], ignore_index=True)
+
+    new_row_df = pd.DataFrame.from_dict(new_row, orient='index')
+    df = pd.concat([df, new_row_df], ignore_index=True)
 
 df = df.set_index("data")
 
@@ -122,7 +124,7 @@ styled_df = df.style.apply(color_rows, axis=1)
 
 df_to_edit = st.data_editor(styled_df, use_container_width=True, disabled=("data","giorno"))
 
-if st.button('Save to BigQuery'):
+if st.button('Salva'):
     df_to_edit.to_gbq(f'{dataset_id}.{table_id}', project_id, if_exists='replace')
-    st.success("Data saved to BigQuery successfully!")
+    st.success("Salvataggio riuscito!")
 
