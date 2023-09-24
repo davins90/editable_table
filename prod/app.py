@@ -55,6 +55,7 @@
 #     df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
 #     st.success("Data saved to BigQuery successfully!")
 
+from hmac import new
 import streamlit as st
 import pandas as pd
 from google.cloud import bigquery
@@ -111,7 +112,9 @@ if df['data'].iloc[0] == yesterday:
         'informazioni': ""
     }
 
-    new_row_df = pd.DataFrame.from_dict(new_row, orient='columns',index=[0])
+    new_row_df = pd.DataFrame.from_dict(new_row)
+
+    st.dataframe(new_row_df)
 
     df = pd.concat([df, new_row_df], ignore_index=True)
 
