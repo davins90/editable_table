@@ -112,17 +112,18 @@ if df['data'].iloc[0] == yesterday:
     }
 
     new_row_df = pd.DataFrame.from_dict(new_row, orient='index')
+
     df = pd.concat([df, new_row_df], ignore_index=True)
 
-df = df.set_index("data")
+st.dataframe(df)
+
+# df = df.set_index("data")
 
 def color_rows(row):
     color = '#e6ffe6' if row['giorno'] in ['sabato', 'domenica'] else ''  
     return ['background-color: {}'.format(color) for _ in row]
 
 df = df.style.apply(color_rows, axis=1)
-
-st.dataframe(df)
 
 # df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"))
 
