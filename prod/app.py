@@ -122,9 +122,11 @@ def color_rows(row):
 
 df = df.style.apply(color_rows, axis=1)
 
-df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"))
+st.dataframe(df)
 
-if st.button('Save to BigQuery'):
-    df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
-    st.success("Data saved to BigQuery successfully!")
+# df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"))
+
+# if st.button('Save to BigQuery'):
+#     df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
+#     st.success("Data saved to BigQuery successfully!")
 
