@@ -114,9 +114,19 @@ if df['data'].iloc[0] == yesterday:
 
 df = df.set_index("data")
 
+# def color_rows(row):
+#     color = '#e6ffe6' if row['giorno'] in ['sabato', 'domenica'] else ''  
+#     return ['background-color: {}'.format(color) for _ in row]
+
 def color_rows(row):
-    color = '#e6ffe6' if row['giorno'] in ['sabato', 'domenica'] else ''  
+    if row['giorno'] in ['sabato', 'domenica']:
+        color = '#e6ffe6'
+    elif not row['notte']:
+        color = '#ffcccc'  # Light red
+    else:
+        color = ''
     return ['background-color: {}'.format(color) for _ in row]
+
 
 df = df.style.apply(color_rows, axis=1)
 
