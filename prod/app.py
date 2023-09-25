@@ -23,7 +23,7 @@ table_id = "df"
 
 st.title("Turni Babbuz")
 
-st.markdown("Cliccate due volte sulla cella in cui volete scrivere e infine su **'Salva'**.")
+st.markdown("Cliccate due volte sulla cella in corrispondenza del giorno scelto e selezionate (o digitate) il vostro nome. Una volta terminato cliccate su **'Salva'**.")
 
 # SQL query to select data from the table and order by date
 sql = f"""
@@ -82,10 +82,8 @@ df = st.data_editor(
     use_container_width=True, 
     disabled=("data","giorno"),
     column_config={
-        "notte": st.column_config.SelectboxColumn(
-            options=["Nemi","Marta","Reby","Raky","Fili"," Sandi","Shad","Alex","DaniP","DaniF","DaniD"],
-            required=True,
-        )
+        "notte": st.column_config.SelectboxColumn(options=["...","Nemi","Marta","Reby","Raky","Fili"," Sandi","Shad","Alex","DaniP","DaniF","DaniD"])
+        "casa": st.column_config.SelectboxColumn(options=["...","nemi","rebi","sandi","marta"])
     },
     hide_index=True,
 )
