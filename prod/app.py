@@ -4,6 +4,7 @@ import pandas as pd
 from google.cloud import bigquery
 import pandas_gbq
 from datetime import datetime, timedelta
+import yagmail
 
 st.set_page_config(layout="wide")
 
@@ -91,4 +92,8 @@ df = st.data_editor(
 if st.button('Salva',type="primary"):
     df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
     st.success("Salvataggio riuscito!")
+
+    user = yagmail.SMTP(user=st.secrets.gmail.sender_email, password=st.secrets.gmail.sender_password)
+
+    user.send(to=st.secrets.gmail.receiver_email, subject="Modifica Turni Babbuz", contents="Modifica effettuata e salvata")
 
