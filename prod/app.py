@@ -5,6 +5,7 @@ from google.cloud import bigquery
 import pandas_gbq
 from datetime import datetime, timedelta
 import yagmail
+import os
 
 st.set_page_config(layout="wide")
 
@@ -93,7 +94,11 @@ if st.button('Salva',type="primary"):
     df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
     st.success("Salvataggio riuscito!")
 
-    user = yagmail.SMTP(user=st.secrets.gmail.sender_email, password=st.secrets.gmail.sender_password)
+    sender_email = os.environ.get('SENDER_EMAIL')
+    sender_password = os.environ.get('SENDER_PASSWORD')
+    receiver_email = os.environ.get('RECEIVER_EMAIL')
 
-    user.send(to=st.secrets.gmail.receiver_email, subject="Modifica Turni Babbuz", contents="Modifica effettuata e salvata")
+    user = yagmail.SMTP(user=sender_email, password=sender_password)
+
+    user.send(to=receiver_email, subject="Modifica Turni Babbuz", contents="Modifica effettuata e salvata")
 
