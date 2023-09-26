@@ -25,7 +25,7 @@ table_id = "df"
 
 st.title("Turni Babbuz")
 
-st.markdown("#### Cliccate due volte sulla cella in corrispondenza del giorno scelto e selezionate (o digitate) il vostro nome. Una volta terminato, cliccate su **'Salva'** e attendente qualche secondo per il messaggio di conferma del salvataggio in verde.")
+st.markdown("Cliccate due volte sulla cella in corrispondenza del giorno scelto e selezionate (o digitate) il vostro nome. \n Una volta terminato, cliccate su **'Salva'** e attendente qualche secondo per il messaggio di conferma del salvataggio, in verde.")
 
 # SQL query to select data from the table and order by date
 sql = f"""
