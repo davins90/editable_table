@@ -88,7 +88,10 @@ df = st.data_editor(
         "casa": st.column_config.SelectboxColumn(options=["...","nemi","rebi","sandi","marta"])
     },
     hide_index=True,
+    key="data_editor"
 )
+
+val = st.session_state["data_editor"]
 
 if st.button('Salva',type="primary"):
     df.to_gbq('{}.{}'.format(dataset_id, table_id), project_id, if_exists='replace')
@@ -100,5 +103,5 @@ if st.button('Salva',type="primary"):
 
     user = yagmail.SMTP(user=sender_email, password=sender_password)
 
-    user.send(to=receiver_email, subject="Modifica Turni Babbuz", contents="Modifica effettuata e salvata")
+    user.send(to=receiver_email, subject="Modifica Turni Babbuz", contents=f"Modifica effettuata e salvata. Ecco cosa: {val}")
 
