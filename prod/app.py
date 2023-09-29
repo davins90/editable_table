@@ -96,6 +96,9 @@ for i in range(deleted_rows):
         # Update the last date for the next iteration
         df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y')
 
+df['data'] = df['data'].dt.strftime('%d/%m/%Y')
+
+
 df = df.set_index("data")
 
 # def color_rows(row):
@@ -119,7 +122,7 @@ df = df.style.apply(color_rows, axis=1)
 df = st.data_editor(
     df,
     use_container_width=True, 
-    disabled=("giorno"),
+    disabled=("data","giorno"),
     column_config={
         "notte": st.column_config.SelectboxColumn(options=["...","Mamma","Nemi","Marta","Reby","Raky","Fili"," Sandi","Shad","Alex","DaniP","DaniF","DaniD"]),
         "casa": st.column_config.SelectboxColumn(options=["...","nemi","rebi","sandi","marta"])
