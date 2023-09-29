@@ -119,7 +119,7 @@ df = df.style.apply(color_rows, axis=1)
 df = st.data_editor(
     df,
     use_container_width=True, 
-    disabled=("data","giorno"),
+    disabled=("giorno"),
     column_config={
         "notte": st.column_config.SelectboxColumn(options=["...","Mamma","Nemi","Marta","Reby","Raky","Fili"," Sandi","Shad","Alex","DaniP","DaniF","DaniD"]),
         "casa": st.column_config.SelectboxColumn(options=["...","nemi","rebi","sandi","marta"])
