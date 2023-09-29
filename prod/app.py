@@ -59,6 +59,9 @@ df = pandas_gbq.read_gbq(sql, project_id=project_id)
 
 #     df = pd.concat([df, new_row_df], ignore_index=True)
 
+# First, ensure the 'data' column is of datetime type for comparison
+df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y')
+
 # Get today's date
 today = datetime.now().date()
 
@@ -78,7 +81,7 @@ for i in range(deleted_rows):
     if not (df['data'].dt.date == new_date).any():
         new_day_name = days_mapping[new_date.strftime('%A')]
         new_row = {
-            'data': new_date, 
+            'data': new_date.strftime('%d/%m/%Y'),  # Convert date to string in 'dd/mm/yyyy' format
             'giorno': new_day_name,
             'notte': None,
             'casa': None,
@@ -87,6 +90,8 @@ for i in range(deleted_rows):
 
         # Append the new_row to the dataframe
         df = df.append(new_row, ignore_index=True)
+        # Update the last date for the next iteration
+        df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y')
 
 df = df.set_index("data")
 
