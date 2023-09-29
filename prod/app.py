@@ -88,8 +88,11 @@ for i in range(deleted_rows):
             'informazioni': None
         }
 
+        new_row_df = pd.DataFrame([new_row])
+
         # Append the new_row to the dataframe
-        df = df.append(new_row, ignore_index=True)
+        df = pd.concat([df, new_row_df], ignore_index=True)
+
         # Update the last date for the next iteration
         df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y')
 
