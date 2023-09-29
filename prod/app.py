@@ -38,26 +38,55 @@ ORDER BY data
 df = pandas_gbq.read_gbq(sql, project_id=project_id)
 
 # Check if the dataframe's first row is "yesterday's date"
-yesterday = datetime.now().date() - timedelta(days=1)
+# yesterday = datetime.now().date() - timedelta(days=1)
 
-if df['data'].iloc[0] == yesterday:
-    # Remove the first row (yesterday's date)
-    df = df.iloc[1:].reset_index(drop=True)
+# if df['data'].iloc[0] == yesterday:
+#     # Remove the first row (yesterday's date)
+#     df = df.iloc[1:].reset_index(drop=True)
     
-    # Add a new day after the last date in the dataframe
-    new_date = df['data'].iloc[-1] + timedelta(days=1)
-    new_day_name = days_mapping[new_date.strftime('%A')]
-    new_row = {
-        'data': new_date,
-        'giorno': new_day_name,
-        'notte': None,
-        'casa': None,
-        'informazioni': None
-    }
+#     # Add a new day after the last date in the dataframe
+#     new_date = df['data'].iloc[-1] + timedelta(days=1)
+#     new_day_name = days_mapping[new_date.strftime('%A')]
+#     new_row = {
+#         'data': new_date,
+#         'giorno': new_day_name,
+#         'notte': None,
+#         'casa': None,
+#         'informazioni': None
+#     }
 
-    new_row_df = pd.DataFrame([new_row])
+#     new_row_df = pd.DataFrame([new_row])
 
-    df = pd.concat([df, new_row_df], ignore_index=True)
+#     df = pd.concat([df, new_row_df], ignore_index=True)
+
+# Get today's date
+today = datetime.now().date()
+
+# Initialize a counter for deleted rows
+deleted_rows = 0
+
+# Check if the dataframe's first row is before today's date
+while df['data'].iloc[0].date() < today:
+    # Remove the first row
+    df = df.iloc[1:].reset_index(drop=True)
+    deleted_rows += 1
+
+# Add new rows equal to the number of deleted rows
+for i in range(deleted_rows):
+    new_date = df['data'].iloc[-1].date() + timedelta(days=1)
+    # If new_date is not already in the dataframe
+    if not (df['data'].dt.date == new_date).any():
+        new_day_name = days_mapping[new_date.strftime('%A')]
+        new_row = {
+            'data': new_date, 
+            'giorno': new_day_name,
+            'notte': None,
+            'casa': None,
+            'informazioni': None
+        }
+
+        # Append the new_row to the dataframe
+        df = df.append(new_row, ignore_index=True)
 
 df = df.set_index("data")
 
