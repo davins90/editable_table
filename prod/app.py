@@ -96,7 +96,7 @@ for i in range(deleted_rows):
         # Update the last date for the next iteration
         # df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y')
 
-# df['data'] = df['data'].dt.strftime('%d/%m/%Y')
+df['data'] = df['data'].dt.strftime('%d/%m/%Y')
 
 
 df = df.set_index("data")
