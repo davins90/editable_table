@@ -25,7 +25,7 @@ table_id = "df"
 
 st.title("Turni Babbuz")
 
-st.markdown("Cliccate due volte sulla cella in corrispondenza del giorno scelto  scrivete il vostro nome.  \nUna volta terminato, cliccate su **'Salva'** e attendente qualche secondo per il messaggio di conferma del salvataggio, in verde.")
+st.markdown("Cliccate due volte sulla cella in corrispondenza del giorno scelto e scrivete il vostro nome.  \nUna volta terminato, cliccate su **'Salva'** e attendente qualche secondo per il messaggio di conferma del salvataggio, in verde.")
 
 # SQL query to select data from the table and order by date
 sql = f"""
@@ -36,28 +36,6 @@ ORDER BY data
 
 # Load data into a DataFrame
 df = pandas_gbq.read_gbq(sql, project_id=project_id)
-
-# Check if the dataframe's first row is "yesterday's date"
-# yesterday = datetime.now().date() - timedelta(days=1)
-
-# if df['data'].iloc[0] == yesterday:
-#     # Remove the first row (yesterday's date)
-#     df = df.iloc[1:].reset_index(drop=True)
-    
-#     # Add a new day after the last date in the dataframe
-#     new_date = df['data'].iloc[-1] + timedelta(days=1)
-#     new_day_name = days_mapping[new_date.strftime('%A')]
-#     new_row = {
-#         'data': new_date,
-#         'giorno': new_day_name,
-#         'notte': None,
-#         'casa': None,
-#         'informazioni': None
-#     }
-
-#     new_row_df = pd.DataFrame([new_row])
-
-#     df = pd.concat([df, new_row_df], ignore_index=True)
 
 # First, ensure the 'data' column is of datetime type for comparison
 df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y')
@@ -100,12 +78,7 @@ for i in range(deleted_rows):
 
 df['data'] = df['data'].dt.strftime('%d/%m/%Y')
 
-
 df = df.set_index("data")
-
-# def color_rows(row):
-#     color = '#e6ffe6' if row['giorno'] in ['sabato', 'domenica'] else ''  
-#     return ['background-color: {}'.format(color) for _ in row]
 
 def color_rows(row):
     if not row['notte']:
@@ -118,6 +91,8 @@ def color_rows(row):
 
 
 df = df.style.apply(color_rows, axis=1)
+
+df = df.drop(columns='casa')
 
 df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"),key="data_editor")
 
