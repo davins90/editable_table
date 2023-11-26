@@ -64,7 +64,6 @@ for i in range(deleted_rows):
             'data': new_date.strftime('%d/%m/%Y'),  # Convert date to string in 'dd/mm/yyyy' format
             'giorno': new_day_name,
             'notte': None,
-            'casa': None,
             'informazioni': None
         }
 
@@ -91,8 +90,6 @@ def color_rows(row):
 
 
 df = df.style.apply(color_rows, axis=1)
-
-df = df.drop(columns='casa')
 
 df = st.data_editor(df,use_container_width=True, disabled=("data","giorno"),key="data_editor")
 
