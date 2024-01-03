@@ -63,8 +63,7 @@ for i in range(deleted_rows):
         new_row = {
             'data': new_date.strftime('%d/%m/%Y'),  # Convert date to string in 'dd/mm/yyyy' format
             'giorno': new_day_name,
-            'notte': None,
-            'informazioni': None
+            'notte': None
         }
 
         new_row_df = pd.DataFrame([new_row])
